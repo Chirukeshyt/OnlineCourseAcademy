@@ -62,7 +62,7 @@ export default function Apply() {
       console.error(error);
       setMessage('Something went wrong. Please try again later.');
     } else {
-      setMessage('Application submitted successfully! With 3-5 you will Get An Confirmation Mail...');
+      setMessage('Application submitted successfully! With in 3-5 you will Get An Confirmation Mail...');
     }
   };
 
