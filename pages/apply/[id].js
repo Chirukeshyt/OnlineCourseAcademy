@@ -16,18 +16,19 @@ export default function Apply() {
   const router = useRouter();
   const { id } = router.query;
 
+  // Fetch scholarship details including payment link
   useEffect(() => {
     const fetchScholarship = async () => {
       if (!id) return;
 
       const { data, error } = await supabase
         .from('scholarships')
-        .select('*')
+        .select('id, title, description, payment_link') // Include payment_link
         .eq('id', id)
         .single();
 
       if (error) {
-        console.error(error);
+        console.error('Error fetching scholarship:', error);
       } else {
         setScholarship(data);
       }
@@ -47,7 +48,7 @@ export default function Apply() {
   const handleApply = async () => {
     setLoading(true);
 
-    // Insert the application into the 'applications' table
+    // Insert application data into the applications table
     const { error } = await supabase.from('applications').insert([
       {
         scholarship_id: scholarship.id,
@@ -59,79 +60,88 @@ export default function Apply() {
     setLoading(false);
 
     if (error) {
-      console.error(error);
+      console.error('Error submitting application:', error);
       setMessage('Something went wrong. Please try again later.');
     } else {
-      setMessage('Application submitted successfully! With in 3-5 days you will Get An Confirmation Mail...');
+      setMessage(
+        'Application submitted successfully! Redirecting to payment...'
+      );
+      // Redirect to the payment link
+      if (scholarship.payment_link) {
+        setTimeout(() => {
+          router.push(scholarship.payment_link);
+        }, 2000); // Add delay to show success message
+      } else {
+        setMessage('No payment link found. Please contact support.');
+      }
     }
   };
 
   return (
-   <Layout>
-     <div className=" mx-auto px-4 py-8">
+    <Layout>
+      <div className="mx-auto px-4 py-8">
+        {scholarship ? (
+          <>
+            <h1 className="text-3xl font-bold">{scholarship.title}</h1>
+            <p className="mt-4">{scholarship.description}</p>
 
-      {scholarship ? (
-        <>
-          <h1 className="text-3xl font-bold">{scholarship.title}</h1>
-          <p className="mt-4">{scholarship.description}</p>
-
-          <form onSubmit={(e) => e.preventDefault()} className="mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium">First Name</label>
-                <input
-                  type="text"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                  className="mt-2 p-2 w-full border rounded-md"
-                />
+            <form onSubmit={(e) => e.preventDefault()} className="mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium">First Name</label>
+                  <input
+                    type="text"
+                    name="first_name"
+                    value={formData.first_name}
+                    onChange={handleChange}
+                    className="mt-2 p-2 w-full border rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">Last Name</label>
+                  <input
+                    type="text"
+                    name="last_name"
+                    value={formData.last_name}
+                    onChange={handleChange}
+                    className="mt-2 p-2 w-full border rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="mt-2 p-2 w-full border rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">Phone Number</label>
+                  <input
+                    type="text"
+                    name="phone_number"
+                    value={formData.phone_number}
+                    onChange={handleChange}
+                    className="mt-2 p-2 w-full border rounded-md"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium">Last Name</label>
-                <input
-                  type="text"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                  className="mt-2 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="mt-2 p-2 w-full border rounded-md"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium">Phone Number</label>
-                <input
-                  type="text"
-                  name="phone_number"
-                  value={formData.phone_number}
-                  onChange={handleChange}
-                  className="mt-2 p-2 w-full border rounded-md"
-                />
-              </div>
-            </div>
-            <button
-              onClick={handleApply}
-              className="mt-6 px-6 py-2 bg-blue-500 text-white rounded-md"
-              disabled={loading}
-            >
-              {loading ? 'Submitting...' : 'Submit Application'}
-            </button>
-            {message && <p className="mt-4 text-red-500">{message}</p>}
-          </form>
-        </>
-      ) : (
-        <p>Loading scholarship details...</p>
-      )}
-    </div>
-   </Layout>
+              <button
+                onClick={handleApply}
+                className="mt-6 px-6 py-2 bg-blue-500 text-white rounded-md"
+                disabled={loading}
+              >
+                {loading ? 'Submitting...' : 'Submit Application'}
+              </button>
+              {message && <p className="mt-4 text-green-500">{message}</p>}
+            </form>
+          </>
+        ) : (
+          <p>Loading scholarship details...</p>
+        )}
+      </div>
+    </Layout>
   );
 }
