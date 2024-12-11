@@ -64,7 +64,7 @@ export default function Apply() {
       setMessage('Something went wrong. Please try again later.');
     } else {
       setMessage(
-        'Application submitted successfully! Redirecting to payment...'
+        'Application submitted successfully! Redirecting to payment page...'
       );
       // Redirect to the payment link
       if (scholarship.payment_link) {
@@ -72,7 +72,7 @@ export default function Apply() {
           router.push(scholarship.payment_link);
         }, 2000); // Add delay to show success message
       } else {
-        setMessage('No payment link found. Please contact support.');
+        setMessage('No payment link found.');
       }
     }
   };

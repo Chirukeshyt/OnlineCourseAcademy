@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Navbar = () => (
   <nav className="bg-blue-600 text-white p-4">
-    <div className="container mx-auto flex justify-between items-center">
+    <div className="container mx-auto justify-between items-center">
       <Link href='/'>      <h1 className="text-xl font-bold">PAPERLESS SCHOLARSHIP SYSTEM</h1>
       </Link>
       <div className="lg:flex">
