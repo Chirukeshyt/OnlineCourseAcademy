@@ -44,7 +44,7 @@ export default function Apply({ scholarship, error }) {
       if (scholarship.payment_link) {
         setTimeout(() => {
           window.location.href = scholarship.payment_link;
-        }, 2000);
+        }, 1000);
       } else {
         setMessage('Application submitted, but no payment link found.');
       }
