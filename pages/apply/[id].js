@@ -18,19 +18,21 @@ export default function Apply() {
 
   // Fetch scholarship details including payment link
   useEffect(() => {
+    if (!id) return; // Ensure id is available before fetching
+
     const fetchScholarship = async () => {
-      if (!id) return;
+      try {
+        const { data, error } = await supabase
+          .from('scholarships')
+          .select('id, title, description, payment_link')
+          .eq('id', id)
+          .single();
 
-      const { data, error } = await supabase
-        .from('scholarships')
-        .select('id, title, description, payment_link') // Include payment_link
-        .eq('id', id)
-        .single();
-
-      if (error) {
-        console.error('Error fetching scholarship:', error);
-      } else {
+        if (error) throw error;
         setScholarship(data);
+      } catch (err) {
+        console.error('Error fetching scholarship:', err);
+        setMessage('Failed to load scholarship details.');
       }
     };
 
@@ -39,41 +41,45 @@ export default function Apply() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handleApply = async () => {
+    if (!formData.first_name || !formData.last_name || !formData.email || !formData.phone_number) {
+      setMessage('Please fill out all required fields.');
+      return;
+    }
+
     setLoading(true);
 
-    // Insert application data into the applications table
-    const { error } = await supabase.from('applications').insert([
-      {
-        scholarship_id: scholarship.id,
-        ...formData,
-        application_status: 'pending',
-      },
-    ]);
+    try {
+      const { error } = await supabase.from('applications').insert([
+        {
+          scholarship_id: scholarship.id,
+          ...formData,
+          application_status: 'pending',
+        },
+      ]);
 
-    setLoading(false);
+      if (error) throw error;
 
-    if (error) {
-      console.error('Error submitting application:', error);
-      setMessage('Something went wrong. Please try again later.');
-    } else {
-      setMessage(
-        'Application submitted successfully! Redirecting to payment page...'
-      );
-      // Redirect to the payment link
+      setMessage('Application submitted successfully! Redirecting to payment page...');
+
       if (scholarship.payment_link) {
         setTimeout(() => {
           router.push(scholarship.payment_link);
-        }, 2000); // Add delay to show success message
+        }, 2000);
       } else {
-        setMessage('No payment link found.');
+        setMessage('Application submitted, but no payment link found.');
       }
+    } catch (err) {
+      console.error('Error submitting application:', err);
+      setMessage('Something went wrong. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
