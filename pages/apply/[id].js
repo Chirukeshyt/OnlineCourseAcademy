@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import Layout from '@/components/Layout';
 
-export default function Apply() {
-  const [scholarship, setScholarship] = useState(null);
+export default function Apply({ scholarship, error }) {
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -13,31 +11,6 @@ export default function Apply() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const router = useRouter();
-  const { id } = router.query;
-
-  // Fetch scholarship details including payment link
-  useEffect(() => {
-    if (!id) return; // Ensure id is available before fetching
-
-    const fetchScholarship = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('scholarships')
-          .select('id, title, description, payment_link')
-          .eq('id', id)
-          .single();
-
-        if (error) throw error;
-        setScholarship(data);
-      } catch (err) {
-        console.error('Error fetching scholarship:', err);
-        setMessage('Failed to load scholarship details.');
-      }
-    };
-
-    fetchScholarship();
-  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +29,7 @@ export default function Apply() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.from('applications').insert([
+      const { error: insertError } = await supabase.from('applications').insert([
         {
           scholarship_id: scholarship.id,
           ...formData,
@@ -64,13 +37,13 @@ export default function Apply() {
         },
       ]);
 
-      if (error) throw error;
+      if (insertError) throw insertError;
 
       setMessage('Application submitted successfully! Redirecting to payment page...');
 
       if (scholarship.payment_link) {
         setTimeout(() => {
-          router.push(scholarship.payment_link);
+          window.location.href = scholarship.payment_link;
         }, 2000);
       } else {
         setMessage('Application submitted, but no payment link found.');
@@ -82,6 +55,16 @@ export default function Apply() {
       setLoading(false);
     }
   };
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="mx-auto px-4 py-8">
+          <p className="text-red-500">Error: {error}</p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -150,4 +133,23 @@ export default function Apply() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+
+  try {
+    const { data, error } = await supabase
+      .from('scholarships')
+      .select('id, title, description, payment_link')
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+
+    return { props: { scholarship: data } };
+  } catch (err) {
+    console.error('Error fetching scholarship:', err);
+    return { props: { error: 'Failed to load scholarship details.' } };
+  }
 }
