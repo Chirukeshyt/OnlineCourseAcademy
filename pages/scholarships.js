@@ -1,45 +1,74 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { supabase } from "@/lib/supabaseClient";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+import { useCart } from "../context/CartContext";
 import Link from "next/link";
-import Layout from "@/components/Layout";
+import Navbar from "@/components/Navbar";
 
-export async function getServerSideProps() {
-  const { data: scholarships, error } = await supabase.from('scholarships').select('*');
-  
-  if (error) {
-    console.error(error);
-  }
+const ScholarshipsPage = () => {
+    const [scholarships, setScholarships] = useState([]);
+    const { addToCart } = useCart();
+    const [showPopup, setShowPopup] = useState(false); // State for showing popup
+    const [popupMessage, setPopupMessage] = useState(""); // Popup message
 
-  return { props: { scholarships } };
-}
+    useEffect(() => {
+        const fetchScholarships = async () => {
+            const { data, error } = await supabase.from("scholarships").select("*");
+            if (error) console.error("Error fetching scholarships:", error);
+            else setScholarships(data);
+        };
 
-export default function Scholarships({ scholarships }) {
-  return (
- <Layout>
-    
-    <div className="  mx-auto px-4 py-8">
-      <h1 className="text-4xl  font-bold text-center">Available Scholarships</h1>
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        {scholarships.map((scholarship) => (
-          <div key={scholarship.id} className="p-6 border  rounded-md shadow-lg">
-            <h2 className="text-xl   font-semibold">Course:- {scholarship.title}</h2>
-            <h3 className="mt-2 font-semibold ">Description:- <p className="font-thin">{scholarship.description}</p></h3>
-            <h3 className="mt-2 flex text-xl font-thin "><p className=" font-semibold">Amount:- &nbsp; </p> ₹{scholarship.amount}</h3>
-            <h3 className="mt-2 flex "><p className="font-semibold">Eligibility:- &nbsp; </p> {scholarship.eligibility}</h3>
-            <Link href={`/apply/${scholarship.id}`}>
-            <button type="button" className="text-white  mt-5 bg-[#2557D6] hover:bg-[#2557D6]/90 focus:ring-4 focus:ring-[#2557D6]/50 focus:outline-none font-lg font-bold rounded-lg text-lg  px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#2557D6]/50 me-2 mb-2">
-<p className='px-10'>Apply Now
-</p>
-</button>
-              
-            </Link>
-          </div>
-        ))}
-      </div>
-    </div>
+        fetchScholarships();
+    }, []);
 
- </Layout>
-  
-  );
-}
+    // Function to handle Add to Cart with Popup
+    const handleAddToCart = (scholarship) => {
+        addToCart(scholarship); // Add to cart logic
+        setPopupMessage(`${scholarship.title} added to cart!`);
+        setShowPopup(true);
+
+        // Hide the popup after 2 seconds
+        setTimeout(() => {
+            setShowPopup(false);
+        }, 2000);
+    };
+
+    return (
+        <div>
+            <Navbar />
+            <div className="max-w-6xl mx-auto p-6">
+                <h1 className="text-3xl font-bold mb-6">Available Scholarships</h1>
+
+                {/* Scholarships Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {scholarships.map((scholarship) => (
+                        <div
+                            key={scholarship.id}
+                            className="border p-4 rounded-lg shadow-lg"
+                        >
+                            <h2 className="text-xl font-semibold">{scholarship.title}</h2>
+                            <p className="text-sm text-gray-600">{scholarship.description}</p>
+                            <p className="mt-2 font-semibold">₹{scholarship.amount}</p>
+                            <button
+                                onClick={() => handleAddToCart(scholarship)}
+                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                            >
+                                Add to Cart
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Popup */}
+            {showPopup && (
+                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <p className="text-green-600 font-bold">{popupMessage}</p>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default ScholarshipsPage;

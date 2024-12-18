@@ -1,19 +1,44 @@
 import Link from "next/link";
+import Image from "next/image";
+import { useCart } from "../context/CartContext"; // Import the CartContext
 
-const Navbar = () => (
-  <nav className="bg-blue-600 text-white p-4">
-    <div className="container mx-auto justify-between items-center">
-      <Link href='/'>      <h1 className="text-xl font-bold">PAPERLESS SCHOLARSHIP SYSTEM</h1>
-      </Link>
-      <div className="lg:flex">
-        {/* <Link href="/"><p className="px-4 text-lg font-bold hover:underline">Home</p></Link> */}
-        {/* <Link href="/dashboard"><p className="px-4 hover:underline">Dashboard</p></Link> */}
-        {/* <Link href="/scholarships"><p className="px-4 text-lg font-bold hover:underline">Scholarships</p></Link> */}
-        {/* <Link href="/application"><p className="px-4 hover:underline">Apply</p></Link> */}
+const Navbar = () => {
+    const { cartItemCount } = useCart(); // Get the cart item count
 
-      </div>
-    </div>
-  </nav>
-);
+    return (
+        <nav className="bg-blue-600 text-white p-4 shadow-md">
+            <div className="container mx-auto flex justify-between items-center">
+                {/* Logo */}
+                <Link href="/" className="text-2xl font-bold hover:text-gray-200 transition duration-300">
+                    PAPERLESS SCHOLARSHIP SYSTEM
+                </Link>
+
+                {/* Navigation Links */}
+                {/*<div className="hidden lg:flex space-x-6">*/}
+                {/*    <Link href="/" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
+                {/*        Home*/}
+                {/*    </Link>*/}
+                {/*    <Link href="/dashboard" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
+                {/*        Dashboard*/}
+                {/*    </Link>*/}
+                {/*    <Link href="/scholarships" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
+                {/*        Scholarships*/}
+                {/*    </Link>*/}
+                {/*    <Link href="/application" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
+                {/*        Apply*/}
+                {/*    </Link>*/}
+                {/*</div>*/}
+
+                {/* Cart */}
+                <Link href="/cart" className="relative hover:text-gray-200 transition duration-300 text-lg font-semibold">
+                    <Image src="/img.png" width={30} height={30} alt="cart" />
+                    <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
+            {cartItemCount}
+          </span>
+                </Link>
+            </div>
+        </nav>
+    );
+};
 
 export default Navbar;
