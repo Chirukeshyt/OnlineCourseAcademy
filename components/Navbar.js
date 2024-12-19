@@ -13,21 +13,21 @@ const Navbar = () => {
                     COURSES ACADEMY
                 </Link>
 
-                {/* Navigation Links */}
-                {/*<div className="hidden lg:flex space-x-6">*/}
-                {/*    <Link href="/" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
-                {/*        Home*/}
-                {/*    </Link>*/}
-                {/*    <Link href="/dashboard" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
-                {/*        Dashboard*/}
-                {/*    </Link>*/}
-                {/*    <Link href="/scholarships" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
-                {/*        Scholarships*/}
-                {/*    </Link>*/}
-                {/*    <Link href="/application" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
-                {/*        Apply*/}
-                {/*    </Link>*/}
-                {/*</div>*/}
+                 {/*Navigation Links*/}
+                <div className="hidden justify-center items-center lg:flex space-x-6">
+                    <Link href="/" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">
+                        Home
+                    </Link>
+                    {/*<Link href="/dashboard" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
+                    {/*    Dashboard*/}
+                    {/*</Link>*/}
+                    <Link href="/scholarships" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">
+                        Courses
+                    </Link>
+                    {/*<Link href="/application" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
+                    {/*    Apply*/}
+                    {/*</Link>*/}
+                </div>
 
                 {/* Cart */}
                 <Link href="/cart" className="relative hover:text-gray-200 transition duration-300 text-lg font-semibold">
