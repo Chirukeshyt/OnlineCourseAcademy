@@ -10,7 +10,7 @@ const Navbar = () => {
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-bold hover:text-gray-200 transition duration-300">
-                    COURSES ACADEMY
+                   ONLINE COURSES ACADEMY
                 </Link>
 
                  {/*Navigation Links*/}

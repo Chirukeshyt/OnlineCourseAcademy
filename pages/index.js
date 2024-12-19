@@ -41,7 +41,7 @@ export default function HomePage() {
                     <div
                         className="bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-lg shadow-lg py-16 px-10">
                         <h1 className="text-5xl font-extrabold text-center mb-4">
-                            Welcome to Courses Academy
+                            Welcome to Online Course Academy
                         </h1>
                         <p className="text-lg text-center mb-8">
                             Discover premium online programming courses designed to help you
