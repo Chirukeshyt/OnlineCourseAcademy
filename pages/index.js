@@ -33,25 +33,34 @@ export default function HomePage() {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Navbar */}
-            <Navbar />
+            <Navbar/>
 
             {/* Hero Section */}
-            <section className="bg-gradient-to-r from-cyan-500 to-cyan-300 text-white py-16">
-                <div className="max-w-7xl mx-auto text-center">
-                    <h1 className="text-4xl font-bold mb-4">Welcome to Courses Academy</h1>
-                    <p className="text-lg mb-6">
-                        Discover premium online programming courses designed to help you succeed. Learn at your own pace and elevate your skills!
-                    </p>
-                    <Link href="/scholarships">
-                        <button
-                            type="button"
-                            className="bg-white text-blue-600 font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-50"
-                        >
-                            Apply for our Courses
-                        </button>
-                    </Link>
+            <section className="bg-gray-100 py-16">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div
+                        className="bg-gradient-to-r from-gray-700 to-gray-500 text-white rounded-lg shadow-lg py-16 px-10">
+                        <h1 className="text-5xl font-extrabold text-center mb-4">
+                            Welcome to Courses Academy
+                        </h1>
+                        <p className="text-lg text-center mb-8">
+                            Discover premium online programming courses designed to help you
+                            succeed. Learn at your own pace and elevate your skills!
+                        </p>
+                        <div className="text-center">
+                            <Link href="/scholarships">
+                                <button
+                                    type="button"
+                                    className="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg transition duration-300"
+                                >
+                                    Apply for our Courses
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </section>
+
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto p-6">
@@ -84,12 +93,15 @@ export default function HomePage() {
                                             ₹{course.amount}
                                         </p>
                                     )}
-                                    <button
-                                        type="button"
-                                        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-                                    >
-                                        Learn More
-                                    </button>
+                                    <Link href={`/courses/${course.id}`}>
+                                        <button
+                                            type="button"
+                                            className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+                                        >
+                                            Learn More
+                                        </button>
+                                    </Link>
+
                                 </div>
                             </div>
                         ))}
@@ -106,7 +118,8 @@ export default function HomePage() {
                         Ready to transform your skills?
                     </h2>
                     <p className="text-gray-700 mb-6">
-                        Join thousands of learners and take the next step in your career. Enroll today and start learning!
+                        Join thousands of learners and take the next step in your career. Enroll today and start
+                        learning!
                     </p>
                     <Link href="/scholarships">
                         <button
