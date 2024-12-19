@@ -48,12 +48,14 @@ const ScholarshipsPage = () => {
                             <h2 className="text-xl font-semibold">{scholarship.title}</h2>
                             <p className="text-sm text-gray-600">{scholarship.description}</p>
                             <p className="mt-2 font-semibold">₹{scholarship.amount}</p>
-                            <button
-                                onClick={() => handleAddToCart(scholarship)}
-                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                            >
-                                Add to Cart
-                            </button>
+                            <Link href={`/courses/${scholarship.id}`}>
+                                <button
+                                    type="button"
+                                    className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+                                >
+                                    Learn More
+                                </button>
+                            </Link>
                         </div>
                     ))}
                 </div>
