@@ -7,13 +7,8 @@ import { useState } from "react";
 export default function CoursePage({ course, error }) {
     const router = useRouter();
     const { addToCart } = useCart();
-    const [showPopup, setShowPopup] = useState(false); // State for showing popup
-    const [popupMessage, setPopupMessage] = useState(""); // Popup message
-
-    // Handle loading state for fallback pages
-    if (router.isFallback) {
-        return <div className="text-white">Loading...</div>;
-    }
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
 
     // Handle errors
     if (error) {
@@ -27,16 +22,25 @@ export default function CoursePage({ course, error }) {
             </div>
         );
     }
+
     const handleAddToCart = (course) => {
-        addToCart(course); // Add to cart logic
+        addToCart(course);
         setPopupMessage(`${course.title} added to cart!`);
         setShowPopup(true);
 
-        // Hide the popup after 2 seconds
         setTimeout(() => {
             setShowPopup(false);
         }, 2000);
     };
+
+    // Display loading spinner if the page is still building or fetching
+    if (router.isFallback) {
+        return (
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-black text-white min-h-screen relative">
@@ -83,6 +87,7 @@ export default function CoursePage({ course, error }) {
                     </div>
                 </div>
             </div>
+
             {/* Popup */}
             {showPopup && (
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -91,7 +96,6 @@ export default function CoursePage({ course, error }) {
                     </div>
                 </div>
             )}
-
         </div>
     );
 }
