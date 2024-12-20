@@ -38,7 +38,6 @@ const SubmitApplicationPage = () => {
                 console.error('Submission failed:', error);
                 alert('Submission failed. Please try again.');
             } else {
-                // alert('Applications submitted successfully!');
                 clearCart(); // Clear the cart after successful submission
                 router.push('/success'); // Redirect to home page
             }
@@ -49,13 +48,23 @@ const SubmitApplicationPage = () => {
     };
 
     return (
-        <div>
+        <div className="min-h-screen bg-gradient-to-br from-black via-gray-800 to-black relative">
+            {/* Background lines */}
+            <div
+                className="absolute inset-0 bg-gradient-to-br from-white to-transparent opacity-10 pointer-events-none"
+                style={{
+                    backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.1) 1%, transparent 1%)",
+                    backgroundSize: "50px 50px",
+                }}
+            ></div>
+
             <Navbar />
-            <div className="max-w-4xl mx-auto p-6">
-                <h1 className="text-2xl font-bold mb-6">Submit Applications</h1>
-                <form onSubmit={handleSubmit} className="space-y-4">
+
+            <div className="max-w-4xl mx-auto p-6 relative z-10">
+                <h1 className="text-3xl font-bold mb-6 text-white text-center">Submit Applications</h1>
+                <form onSubmit={handleSubmit} className="space-y-6 bg-gradient-to-br from-gray-900 via-black to-gray-800 p-6 rounded-lg shadow-lg">
                     <div>
-                        <label htmlFor="first_name" className="block font-medium">First Name</label>
+                        <label htmlFor="first_name" className="block font-medium text-white">First Name</label>
                         <input
                             type="text"
                             id="first_name"
@@ -63,11 +72,12 @@ const SubmitApplicationPage = () => {
                             value={formData.first_name}
                             onChange={handleChange}
                             required
-                            className="border p-2 w-full rounded"
+                            placeholder="Enter your First Name"
+                            className="border border-gray-600 p-2 w-full rounded text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="last_name" className="block font-medium">Last Name</label>
+                        <label htmlFor="last_name" className="block font-medium text-white">Last Name</label>
                         <input
                             type="text"
                             id="last_name"
@@ -75,11 +85,12 @@ const SubmitApplicationPage = () => {
                             value={formData.last_name}
                             onChange={handleChange}
                             required
-                            className="border p-2 w-full rounded"
+                            placeholder="Enter your Name"
+                            className="border border-gray-600 p-2 w-full rounded text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block font-medium">Email</label>
+                        <label htmlFor="email" className="block font-medium text-white">Email</label>
                         <input
                             type="email"
                             id="email"
@@ -87,11 +98,12 @@ const SubmitApplicationPage = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            className="border p-2 w-full rounded"
+                            placeholder="Enter your Email"
+                            className="border border-gray-600 p-2 w-full rounded text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="phone_number" className="block font-medium">Phone Number</label>
+                        <label htmlFor="phone_number" className="block font-medium text-white">Phone Number</label>
                         <input
                             type="tel"
                             id="phone_number"
@@ -99,12 +111,13 @@ const SubmitApplicationPage = () => {
                             value={formData.phone_number}
                             onChange={handleChange}
                             required
-                            className="border p-2 w-full rounded"
+                            placeholder="Enter your Phone Number"
+                            className="border border-gray-600 p-2 w-full rounded text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        className="px-6 py-2 bg-black text-white rounded  transition-transform transform hover:scale-105 duration-300"
                     >
                         Submit Applications
                     </button>
