@@ -67,7 +67,7 @@ export default function HomePage() {
                         <div className="max-w-7xl mx-auto px-6" data-aos="fade-up">
                             <div className="bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white rounded-lg shadow-lg py-16 px-10 border border-gray-600">
                                 <h1 className="text-5xl font-extrabold text-center mb-4">
-                                    Welcome to Online Course Academy
+                                    Welcome to Online Cou
                                 </h1>
                                 <p className="text-lg text-center mb-8">
                                     Discover premium online programming courses designed to help you
@@ -153,7 +153,7 @@ export default function HomePage() {
                                     type="button"
                                     className="bg-white text-black font-semibold py-3 px-6 rounded-lg hover:bg-gray-200 transition-transform transform hover:scale-110 duration-300"
                                 >
-                                    Explore Our Courses
+                                    Explore Our Course
                                 </button>
                             </Link>
                         </div>
