@@ -6,33 +6,33 @@ const Navbar = () => {
     const { cartItemCount } = useCart(); // Get the cart item count
 
     return (
-        <nav className="p-4 text-white bg-blue-600 shadow-md">
-            <div className="container flex justify-between items-center mx-auto">
+        <nav className="bg-blue-600 text-white p-4 shadow-md">
+            <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
-                <Link href="/" className="text-2xl font-bold transition duration-300 hover:text-gray-200">
+                <Link href="/" className="text-2xl font-bold hover:text-gray-200 transition duration-300">
                    ONLINE COURSES ACADEMY
                 </Link>
 
                  {/*Navigation Links*/}
-                <div className="hidden justify-center items-center space-x-6 lg:flex">
-                    <Link href="/" className="text-lg font-semibold transition duration-300 hover:text-gray-200">
+                <div className="hidden justify-center items-center lg:flex space-x-6">
+                    <Link href="/" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">
                         Home
                     </Link>
-                    {/*<Link href="/dashboard" className="text-lg font-semibold transition duration-300 hover:text-gray-200">*/}
+                    {/*<Link href="/dashboard" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
                     {/*    Dashboard*/}
                     {/*</Link>*/}
-                    <Link href="/scholarships" className="text-lg font-semibold transition duration-300 hover:text-gray-200">
-                        Course
+                    <Link href="/scholarships" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">
+                        Courses
                     </Link>
-                    {/*<Link href="/application" className="text-lg font-semibold transition duration-300 hover:text-gray-200">*/}
+                    {/*<Link href="/application" className="hover:text-gray-200 transition duration-300 text-lg font-semibold">*/}
                     {/*    Apply*/}
                     {/*</Link>*/}
                 </div>
 
                 {/* Cart */}
-                <Link href="/cart" className="relative text-lg font-semibold transition duration-300 hover:text-gray-200">
+                <Link href="/cart" className="relative hover:text-gray-200 transition duration-300 text-lg font-semibold">
                     <Image src="/img.png" width={30} height={30} alt="cart" />
-                    <span className="absolute -top-2 -right-3 px-2 text-xs text-white bg-red-500 rounded-full">
+                    <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
             {cartItemCount}
           </span>
                 </Link>
