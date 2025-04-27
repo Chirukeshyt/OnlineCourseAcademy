@@ -47,7 +47,7 @@ const CartPage = () => {
                                     onClick={() => removeFromCart(item.id)}
                                     className="text-red-500 hover:underline"
                                 >
-                                    Remove
+                                    Remove Item!
                                 </button>
                             </div>
                         ))}
