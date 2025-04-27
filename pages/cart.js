@@ -55,7 +55,7 @@ const CartPage = () => {
                             onClick={handleProceedToSubmit}
                             className="mt-4 px-6 py-2 bg-white w-full text-black rounded hover:bg-green-600 transition-transform transform hover:scale-105 font-semibold text-lg duration-300"
                         >
-                            Submit Applications
+                            Submit your Applications
                         </button>
                     </div>
                 )}
