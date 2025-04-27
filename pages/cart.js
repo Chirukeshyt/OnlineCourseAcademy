@@ -34,7 +34,7 @@ const CartPage = () => {
                     <p className="text-white">
                         Your cart is empty ryt now...!
                         <Link href="/scholarships" className="text-blue-500 underline">
-                            View Available Courses
+                            View Available Courses Now...!
                         </Link>
                     </p>
                 ) : (
