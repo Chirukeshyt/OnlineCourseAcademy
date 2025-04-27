@@ -32,7 +32,7 @@ const CartPage = () => {
                 <h1 className="text-3xl font-bold mb-6 text-white text-center">Your Cart</h1>
                 {cart.length === 0 ? (
                     <p className="text-white">
-                        Your cart is empty.
+                        Your cart is empty ryt now...!
                         <Link href="/scholarships" className="text-blue-500 underline">
                             View Available Courses
                         </Link>
